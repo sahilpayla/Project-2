@@ -34,7 +34,7 @@ const createCollege = async function (req, res) {
         if (!isValid(logoLink)) return res.status(400).send({ status: false, message: "logo link is required" })
         // if (!urlRegex(logoLink)) return res.status(400).send({ status: false, message: "logo link is invalid" })
 
-        const findCollegeName = await collegeModel.findOne({name})
+        const findCollegeName = await collegeModel.findOne({ name })
         if (findCollegeName) return res.status(400).send({ status: false, message: `${name} is already registered` })
 
         const newCollege = await collegeModel.create(collegeData)
@@ -47,23 +47,49 @@ const createCollege = async function (req, res) {
     }
 }
 
-const getCollegeDetails = async function (req,res){
-    let CollegeName = req.query
+const getCollegeDetails = async function (req, res) {
+    try {
+        let data = req.query
 
-    if (!isValidRequestBody(CollegeName)) {
-        return res.status(400).send({ status: false, message: "please provide college name" })}
+        if (!isValidRequestBody(data)) {
+            return res.status(400).send({ status: false, message: "please provide college name" })
+        }
 
-        const getCollegeDetails=await collegeModel({name:CollegeName,isDeleted:false})
+        let CollegeName = data.collegeName
 
-        if(!getCollegeDetails) return res.status(400).send({status:false,message:"no college found with this college name please provide correct college name"} )
+        const getCollegeDetail = await collegeModel.findOne({ name: CollegeName, isDeleted: false })
+        console.log(getCollegeDetail)
+        if (!getCollegeDetail) return res.status(404).send({ 
+            status: false, 
+            message: "no college found with this college name please provide correct college name" })
 
-        const collegeId=getCollegeDetails._id
+        const collegeId = getCollegeDetail._id
+        console.log(collegeId)
 
-        const findIntern= await internModel({collegeId:collegeId,isDeleted:false}).select({name:1,email:1,mobile:1})
-        
+        const findIntern = await internModel.find({ collegeId: collegeId, isDeleted: false }).select({ name: 1, email: 1, mobile: 1 })
+        console.log(findIntern)
 
+        let saveData = {
+            name: getCollegeDetail.name,
+            fullName: getCollegeDetail.fullName,
+            logoLink: getCollegeDetail.logoLink,
+            interns: findIntern
+        }
 
+        console.log(saveData)
+
+        res.status(200).send({ status: true, message: "college interns details", data: saveData })
+    }
+    catch (err) {
+        return res.status(500).send({ status: false, message: err.message })
+
+    }
 }
 
 
+
+
+
+
 module.exports.createCollege = createCollege
+module.exports.getCollegeDetails = getCollegeDetails

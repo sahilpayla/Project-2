@@ -1,9 +1,11 @@
 const collegeModel = require("../model/collegeModel")
 const internModel = require("../model/internModel")
 
-const nameRegex = /^([a-zA-Z ]+)$/   //completly not valid find space regex          //hhdgfhhgfsfdghgdfdsxfdgh                     
+const nameRegex = /^([a-zA-Z ]+)$/   
+//completly not valid find space regex          //hhdgfhhgfsfdghgdfdsxfdgh                     
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-const mobileRegex = /^[0]?[6789]\d{9}$/ //10 didgit mobile number stating with any(6,7,8,9) and 0 if you want to use in mobile number                                
+const mobileRegex = /^[0]?[6789]\d{9}$/ 
+//10 didgit mobile number stating with any(6,7,8,9) and 0 if you want to use in mobile number                                
 
 
 const isValid = function (value) {
@@ -54,7 +56,7 @@ const createIntern = async function (req, res) {
             collegeName:collegeIdByCollegeName
         }
 
-        const newInternData = await (await internModel.create(saveData)).populate('college')
+        const newInternData = await internModel.create(saveData)
         res.status(201).send({ status: true, message: " your Internship application successfully accepted", data: newInternData })
     }
     catch (err) {

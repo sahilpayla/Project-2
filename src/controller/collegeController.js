@@ -20,8 +20,6 @@ const nameRegex = /^([a-zA-Z]+)$/
 // iind regex for the url
 const urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w -]*)?\??(?:[-\+=&;%@.\w]*)#?(?:[\w]*))?)/
 
-// TA REGEX
-// const urlRegex = 
 
 const createCollege = async function (req, res) {
     try {

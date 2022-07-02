@@ -12,5 +12,4 @@ router.post('/functionup/interns',internController.createIntern)
 //INTERNS OF THE SPECIFIC COLLEGE
 router.get('/functionup/collegeDetails',collegeController.getCollegeDetails)
 
-
 module.exports = router

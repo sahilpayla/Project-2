@@ -103,12 +103,19 @@ const createIntern = async function (req, res) {
         
         const saveData={name,email,mobile,collegeId }
       
-        const newInternData = await internModel.create(saveData)
+        const newInternData = await internModel.create(saveData)  
 
+        const finalData ={
+            isDeleted:false,
+            name :name,
+            email :email,
+            mobile :mobile,
+            collegeId :collegeId 
+        }
         res.status(201).send({ 
             status: true, 
             message: " your Internship application successfully accepted", 
-            data: newInternData
+            data: finalData
          })
     }
     catch (err) {

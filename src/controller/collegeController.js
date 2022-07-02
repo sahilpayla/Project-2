@@ -99,6 +99,7 @@ const getCollegeDetails = async function (req, res) {
             })
         }
 
+        // case sensitive
         let CollegeName = data.collegeName
 
         const getCollegeDetail = await collegeModel.findOne({

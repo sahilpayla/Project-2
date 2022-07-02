@@ -22,10 +22,6 @@ const internSchema = mongoose.Schema({
     collegeId: {
         type: ObjectId,
         ref: 'college'
-    },
-    isDeleted: {
-        type: Boolean,
-        default: false
     }
 }, { timestamps: true })
 
